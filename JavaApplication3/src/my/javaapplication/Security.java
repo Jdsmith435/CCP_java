@@ -1,30 +1,30 @@
-package my.javaapplication;
-
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 /*****************************************************
  * created by: Jo Phillips
  * email: joxphillips@gmail.com
  *  
  *
  ****************************************************/
+package my.javaapplication;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 public class Security 
 {
-private Timer logoutTimer;
+private static Timer logoutTimer;
 private int delay = 900000; //15 minutes in miliseconds
+public static  Security single_instance;
+
 private ActionListener logoutListener = new ActionListener()
     {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-
+          LogoutTest loginTestForm = new LogoutTest();
         }
-
-
     };
     
-    public Security()
+    private Security()
     {
         logoutTimer = new Timer(delay, logoutListener);
         logoutTimer.start();
@@ -35,9 +35,26 @@ private ActionListener logoutListener = new ActionListener()
     {
         System.out.println("Hello, World");
     }
+    
     public static void resetTimer()
     {
+      logoutTimer.restart();
+    }
+    private class LogoutTest
+    {
+     LogoutTest() 
+     {
+        JFrame f = new JFrame();
+        JButton loginButton =new JButton("login");
+        loginButton.setBounds(130,100,100, 40);
 
+        f.add(loginButton);
+        f.setVisible(true);
+     }
+    }
+    { 
+    // static block to initialize instance 
+    single_instance = new Security();
     }
 }
 
